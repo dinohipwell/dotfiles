@@ -1,0 +1,35 @@
+[user]
+  name = {{ .name }}
+  email = {{ .email }}
+[core]
+{{- if eq .chezmoi.os "windows" }}
+  fsmonitor = true
+  sshCommand = 'C:/Windows/System32/OpenSSH/ssh.exe'
+{{- end }}
+  ignorecase = false
+  autocrlf = input
+  editor = code --wait
+[diff]
+  tool = vscode
+[difftool "vscode"]
+  cmd = code --wait --diff $LOCAL $REMOTE
+[merge]
+  tool = vscode
+[mergetool "vscode"]
+  cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
+[difftool]
+  prompt = false
+[mergetool]
+  trustExitCode = true
+[protocol]
+  version = 2
+{{- if eq .chezmoi.os "windows" }}
+[http]
+  sslBackend = schannel
+{{- end }}
+[init]
+  defaultBranch = main
+[checkout]
+  defaultRemote = origin
+[tag]
+  sort = version:refname

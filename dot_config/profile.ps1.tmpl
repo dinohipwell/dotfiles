@@ -1,0 +1,21 @@
+# Load modules
+Import-Module posh-git
+
+# Settings
+$GitPromptSettings.DefaultPromptPrefix = 'PS '
+$GitPromptSettings.DefaultPromptAbbreviateHomeDirectory = $true
+
+function Invoke-Starship-PreCommand {
+  $host.ui.Write("`e]0; PS> $(if ($IsAdmin) {'Administrator: '} else {''})$(Get-PromptPath) `a")
+}
+Invoke-Expression (&starship init powershell)
+
+# Commands
+nvs use | Out-Null
+
+# Functions
+function Refresh-EnvironmentVariable($Value) {
+  Set-Item "Env:${Value}" "$([Environment]::GetEnvironmentVariable($Value, 'User'))"
+}
+
+# Aliases

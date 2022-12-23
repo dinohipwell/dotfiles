@@ -1,0 +1,8 @@
+README.md
+{{- if eq .chezmoi.os "windows" }}
+{{- else }}
+*.ps1
+{{- if .chezmoi.kernel.osrelease | lower | contains "microsoft" }}
+{{- else }}
+{{- end }}
+{{- end }}
